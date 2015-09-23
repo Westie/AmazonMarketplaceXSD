@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by jwo (private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation>$Date: 2003/04/09 $</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="amzn-base.xsd"/>
+	<xs:element name="CustomerAddresses">
+		<xs:annotation>
+			<xs:documentation>List of customer's billing and shipping addresses.  Addresses may be for people other than the customer (e.g. friends and family)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerAddress" type="CustomerAddress" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="CustomerAddress">
+		<xs:sequence>
+			<xs:element name="Name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AddressFieldOne">
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="180"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AddressFieldTwo" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="180"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AddressFieldThree" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString">
+						<xs:maxLength value="180"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="City">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StateOrRegion" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PostalCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CountryCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="2"/>
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PhoneNumber" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="isBilling" type="xs:boolean" use="optional"/>
+		<xs:attribute name="isShipping" type="xs:boolean" use="optional"/>
+		<xs:attribute name="isDefaultShipping" type="xs:boolean" use="optional"/>
+		<xs:attribute name="MerchantAddressID" type="xs:anySimpleType" use="optional"/>
+	</xs:complexType>
+</xs:schema>

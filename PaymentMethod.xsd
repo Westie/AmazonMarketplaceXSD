@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by jwo (private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation>$Date: 2004/11/18 $</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="amzn-base.xsd"/>
+	<xs:element name="PaymentMethods">
+		<xs:annotation>
+			<xs:documentation>A container to payment methods (e.g. credit card, debit card, invoice account) of the customer</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PaymentMethod" type="PaymentMethod" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PaymentMethod">
+		<xs:annotation>
+			<xs:documentation>Details for an individual instance of a payment method (e.g. "A Visa with the number 4416...")</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Type" type="PaymentTypes">
+				<xs:annotation>
+					<xs:documentation>"Credit Card", "Debit Card", etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Brand" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>"Citibank," "Bank of America," etc.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Issuer" type="Issuers" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>REQUIRED for credit cards-- "Visa", "MasterCard", etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Number">
+				<xs:annotation>
+					<xs:documentation>Encrypted Account Number for this Payment Method</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="172"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SeriesCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Some cards have series ID. Example: Verification digits printed on credit cards following the embossed number</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CustomerName">
+				<xs:annotation>
+					<xs:documentation>Name on the account</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="150"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PostalCode">
+				<xs:annotation>
+					<xs:documentation>Postal code for the billing address for this account</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StartDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date when this account becomes valid</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpirationDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Date when this account becomes invalid</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="isDefault" type="xs:boolean" use="optional"/>
+		<xs:attribute name="MerchantPaymentMethodID" type="xs:anySimpleType" use="optional"/>
+	</xs:complexType>
+	<xs:simpleType name="PaymentTypes">
+		<xs:annotation>
+			<xs:documentation>Enumeration of all Amazon.com-recognized Payment Methods</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Bank Account"/>
+			<xs:enumeration value="Credit Card"/>
+			<xs:enumeration value="Credit Line"/>
+			<xs:enumeration value="Debit Card"/>
+			<xs:enumeration value="Invoice Account"/>
+			<xs:enumeration value="Store Card"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Issuers">
+		<xs:annotation>
+			<xs:documentation>Enumeration of all Amazon.com-recognized Credit Card issuers</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Visa"/>
+			<xs:enumeration value="MasterCard"/>
+			<xs:enumeration value="Discover"/>
+			<xs:enumeration value="Amex"/>
+			<xs:enumeration value="JCB"/>
+			<xs:enumeration value="Switch"/>
+			<xs:enumeration value="DinersClub"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
